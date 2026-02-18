@@ -9,8 +9,6 @@ import {
   Check,
   Package,
   Truck,
-  CreditCard,
-  PhoneCall,
   ChevronRight,
 } from 'lucide-react';
 

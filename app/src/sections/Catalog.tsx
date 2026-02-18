@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ShoppingCart, Info, ChevronLeft, ChevronRight } from 'lucide-react';
-import type { Product } from '@/data/products';
 import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import useEmblaCarousel from 'embla-carousel-react';
