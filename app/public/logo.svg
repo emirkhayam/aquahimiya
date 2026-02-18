@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 280" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <style>
+      .aqua-text {
+        fill: #0099CC;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 900;
+      }
+      .chemistry-text {
+        fill: #0099CC;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+
+  <!-- AQUA text - main logo text, large and bold -->
+  <text x="90" y="155" class="aqua-text" font-size="140" letter-spacing="-2">AQUA</text>
+
+  <!-- ХИМИЯ text - positioned below and to the right -->
+  <text x="440" y="185" class="chemistry-text" font-size="60">ХИМИЯ</text>
+
+  <!-- Wave design - two flowing waves -->
+  <!-- Upper dark wave -->
+  <path d="M 85 195 Q 150 175, 220 195 Q 290 215, 360 195 Q 450 175, 540 195 Q 630 215, 720 195"
+        stroke="#004B87"
+        stroke-width="12"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+  <!-- Lower light wave -->
+  <path d="M 100 225 Q 180 200, 260 225 Q 340 250, 420 225 Q 500 200, 580 225 Q 660 250, 740 225"
+        stroke="#0099CC"
+        stroke-width="14"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>

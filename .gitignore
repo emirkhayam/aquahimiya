@@ -1,0 +1,12 @@
+node_modules/
+app/node_modules/
+dist/
+app/dist/
+.env
+.env.local
+.DS_Store
+*.log
+.claude/
+_bmad/
+_bmad-output/
+nul

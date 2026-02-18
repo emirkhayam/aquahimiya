@@ -1,0 +1,346 @@
+/* Import Montserrat font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 206 100% 31%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 196 100% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 196 100% 95%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 196 100% 70%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 206 100% 31%;
+    --radius: 0.625rem;
+
+    --aqua-deep: 206 100% 31%;
+    --aqua-primary: 196 100% 40%;
+    --aqua-bright: 196 100% 45%;
+    --aqua-light: 196 100% 70%;
+    --aqua-pale: 196 100% 95%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    font-family: 'Montserrat', system-ui, -apple-system, sans-serif !important;
+  }
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Montserrat', system-ui, -apple-system, sans-serif !important;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Montserrat', system-ui, -apple-system, sans-serif !important;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, label {
+    font-family: 'Montserrat', system-ui, -apple-system, sans-serif !important;
+  }
+
+  /* Reduce repaints */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* GPU acceleration for animations */
+  [class*="animate-"],
+  [class*="transition-"] {
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* CSS Containment for better performance */
+  section {
+    contain: layout style paint;
+    will-change: contents;
+  }
+
+  /* Optimize images */
+  img {
+    content-visibility: auto;
+    contain-intrinsic-size: 500px;
+  }
+
+  /* Force GPU for hover states */
+  .group:hover * {
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Reduced motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #004080 0%, #0066B3 50%, #0099CC 100%);
+  }
+
+  .bg-gradient-aqua {
+    background: linear-gradient(135deg, #004080 0%, #0066B3 50%, #0099CC 100%);
+  }
+
+  .bg-gradient-dark {
+    background: linear-gradient(135deg, #003366 0%, #004080 30%, #005299 60%, #0066B3 100%);
+  }
+  
+  .glass {
+    @apply backdrop-blur-xl bg-white/10 border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply backdrop-blur-xl bg-black/20 border border-white/10;
+  }
+}
+
+/* Bubble rise animation */
+@keyframes bubbleRise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Slow pulse for neon glows */
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50%       { opacity: 0.45; transform: scale(1.08); }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 6s ease-in-out infinite;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(0) translateZ(0) scaleY(1);
+  }
+  50% {
+    transform: translateX(-25%) translateZ(0) scaleY(0.8);
+  }
+  100% {
+    transform: translateX(-50%) translateZ(0) scaleY(1);
+  }
+}
+
+@keyframes bubble {
+  0% {
+    transform: translateY(100%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes wave-slow {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-200px);
+  }
+}
+
+@keyframes float-bubbles {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse-ripple {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-110vh) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes wave-horizontal {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-25px);
+  }
+}
+
+@keyframes droplet-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1) rotate(-45deg);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2) rotate(-45deg);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-wave {
+  animation: wave 8s linear infinite;
+}
+
+.animate-bubble {
+  animation: bubble 4s ease-in infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-wave-slow {
+  animation: wave-slow 20s linear infinite;
+}
+
+.animate-float-bubbles {
+  animation: float-bubbles 8s ease-in-out infinite;
+}
+
+.animate-pulse-ripple {
+  animation: pulse-ripple 4s ease-in-out infinite;
+}
+
+.animate-float-up {
+  animation: float-up 20s linear infinite;
+}
+
+.animate-wave-layer-1 {
+  animation: wave-horizontal 15s ease-in-out infinite;
+}
+
+.animate-wave-layer-2 {
+  animation: wave-horizontal 12s ease-in-out infinite reverse;
+}
+
+.animate-wave-layer-3 {
+  animation: wave-horizontal 18s ease-in-out infinite;
+}
+
+.animate-droplet-pulse {
+  animation: droplet-pulse 4s ease-in-out infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0066B3;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #004080;
+}
