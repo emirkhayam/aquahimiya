@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { products as staticProducts } from '@/data/products';
 import type { Product } from '@/data/products';
 
@@ -53,8 +53,30 @@ async function fetchAllProducts(): Promise<Product[]> {
 }
 
 export function useProducts() {
-  const [products, setProductsState] = useState<Product[]>(() => loadFromStorage());
+  const [products, setProductsState] = useState<Product[]>(() => {
+    const stored = loadFromStorage();
+    // If localStorage is empty, use static products immediately as fallback
+    return stored.length > 0 ? stored : staticProducts;
+  });
   const [loading, setLoading] = useState(false);
+
+  // Auto-fetch from all-products.json if localStorage was empty (first visit)
+  useEffect(() => {
+    const stored = loadFromStorage();
+    if (stored.length === 0) {
+      setLoading(true);
+      fetchAllProducts()
+        .then(merged => {
+          setProductsState(merged);
+          saveToStorage(merged);
+        })
+        .catch(() => {
+          // staticProducts already set as initial state, just persist them
+          saveToStorage(staticProducts);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, []);
 
   const setProducts = (updated: Product[]) => {
     const clean = deduplicateById(updated);
