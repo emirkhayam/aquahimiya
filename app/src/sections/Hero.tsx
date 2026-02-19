@@ -3,7 +3,6 @@ import { ArrowRight, ChevronDown, ShoppingCart, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useProducts } from '@/hooks/useProducts';
-import type { Product } from '@/data/products';
 
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false);
