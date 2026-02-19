@@ -48,7 +48,8 @@ async function fetchAllProducts(): Promise<Product[]> {
   }));
 
   const staticIds = new Set(staticProducts.map(p => p.id));
-  const fromJson = enriched.filter(p => !staticIds.has(p.id));
+  const staticNames = new Set(staticProducts.map(p => p.name.toLowerCase().trim()));
+  const fromJson = enriched.filter(p => !staticIds.has(p.id) && !staticNames.has(p.name.toLowerCase().trim()));
   return deduplicateById([...staticProducts, ...fromJson]);
 }
 
