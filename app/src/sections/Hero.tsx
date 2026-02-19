@@ -1,17 +1,22 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { ArrowRight, ChevronDown, ShoppingCart, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { products as staticProducts } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
 import type { Product } from '@/data/products';
 
 export default function Hero() {
-  const [popularProducts, setPopularProducts] = useState<Product[]>([]);
   const [isVisible, setIsVisible] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(0);
   const [fade, setFade] = useState(true);
   const [whatsappNumber, setWhatsappNumber] = useState('');
   const navigate = useNavigate();
+  const { products } = useProducts();
+
+  const popularProducts = useMemo(() => {
+    const featured = products.filter(p => p.featured);
+    return featured.length > 0 ? featured : products.slice(0, 6);
+  }, [products]);
 
   useEffect(() => {
     setIsVisible(true);
@@ -20,11 +25,6 @@ export default function Hero() {
       const p = JSON.parse(settings);
       setWhatsappNumber(p.whatsappNumber || '');
     }
-    // Загружаем featured товары из adminProducts
-    const saved = localStorage.getItem('adminProducts');
-    const allProducts: Product[] = saved ? JSON.parse(saved) : staticProducts;
-    const featured = allProducts.filter(p => p.featured);
-    setPopularProducts(featured.length > 0 ? featured : allProducts.slice(0, 6));
   }, []);
 
   useEffect(() => {

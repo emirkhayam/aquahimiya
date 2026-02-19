@@ -35,6 +35,7 @@ export const products: Product[] = [
     article: 'AQ-CHL-001',
     brand: 'AquaChem',
     inStock: true,
+    featured: true,
     characteristics: {
       'Вес': '1 кг',
       'Вес таблетки': '200 г',
@@ -85,6 +86,7 @@ export const products: Product[] = [
     article: 'AQ-ALG-003',
     brand: 'AquaChem',
     inStock: true,
+    featured: true,
     characteristics: {
       'Объем': '5 литров',
       'Тип': 'Альгицид непенящийся',
@@ -134,6 +136,7 @@ export const products: Product[] = [
     article: 'FLT-PRO-500',
     brand: 'AquaFilter',
     inStock: true,
+    featured: true,
     characteristics: {
       'Производительность': '15 м³/ч',
       'Объем бассейна': 'до 100 м³',
@@ -160,6 +163,7 @@ export const products: Product[] = [
     article: 'PMP-AQ-300',
     brand: 'AquaPump',
     inStock: true,
+    featured: true,
     characteristics: {
       'Производительность': '18 м³/ч',
       'Мощность': '1.5 кВт',
@@ -187,6 +191,7 @@ export const products: Product[] = [
     article: 'DOS-AUTO-01',
     brand: 'AutoPool',
     inStock: true,
+    featured: true,
     characteristics: {
       'Тип': 'Автоматическая станция дозирования',
       'Контролируемые параметры': 'pH, свободный хлор',
@@ -216,6 +221,7 @@ export const products: Product[] = [
     article: 'ACC-PREM-01',
     brand: 'PoolCare',
     inStock: true,
+    featured: true,
     characteristics: {
       'Состав набора': 'Сачок, щетка, штанга, тестер, термометр',
       'Материал штанги': 'Алюминий анодированный',

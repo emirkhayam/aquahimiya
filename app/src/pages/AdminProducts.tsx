@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { products as initialProducts } from '../data/products';
 import { getStoredCategories } from '../hooks/useCategories';
 import type { Category } from '../hooks/useCategories';
-import type { Product } from '../data/products';
+import { useProducts } from '../hooks/useProducts';
 import AdminLayout from '../components/AdminLayout';
 import { Edit, Trash2, Star } from 'lucide-react';
 
 const AdminProducts = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState<Product[]>([]);
+  const { products, setProducts } = useProducts();
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -19,37 +18,23 @@ const AdminProducts = () => {
       return;
     }
     setCategories(getStoredCategories());
-
-    const savedProducts = localStorage.getItem('adminProducts');
-    if (savedProducts) {
-      setProducts(JSON.parse(savedProducts));
-    } else {
-      setProducts(initialProducts);
-      localStorage.setItem('adminProducts', JSON.stringify(initialProducts));
-    }
   }, [navigate]);
 
   const handleToggleStock = (id: number) => {
-    const updated = products.map(p =>
+    setProducts(products.map(p =>
       p.id === id ? { ...p, inStock: !p.inStock } : p
-    );
-    setProducts(updated);
-    localStorage.setItem('adminProducts', JSON.stringify(updated));
+    ));
   };
 
   const handleToggleFeatured = (id: number) => {
-    const updated = products.map(p =>
+    setProducts(products.map(p =>
       p.id === id ? { ...p, featured: !p.featured } : p
-    );
-    setProducts(updated);
-    localStorage.setItem('adminProducts', JSON.stringify(updated));
+    ));
   };
 
   const handleDelete = (id: number) => {
     if (confirm('Вы уверены, что хотите удалить этот товар?')) {
-      const updated = products.filter(p => p.id !== id);
-      setProducts(updated);
-      localStorage.setItem('adminProducts', JSON.stringify(updated));
+      setProducts(products.filter(p => p.id !== id));
     }
   };
 
@@ -70,10 +55,7 @@ const AdminProducts = () => {
           images: ['/products/placeholder.jpg']
         }));
 
-        const combined = [...products, ...enriched];
-        setProducts(combined);
-        localStorage.setItem('adminProducts', JSON.stringify(combined));
-
+        setProducts([...products, ...enriched]);
         alert(`Успешно загружено ${allProducts.length} товаров!`);
       } catch (error) {
         alert('Ошибка загрузки: ' + error);

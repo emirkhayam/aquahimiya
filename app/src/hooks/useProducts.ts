@@ -4,7 +4,7 @@ import type { Product } from '@/data/products';
 
 const STORAGE_KEY = 'adminProducts';
 const VERSION_KEY = 'adminProductsVersion';
-const CURRENT_VERSION = '3'; // bump this to force-reset cache on next deploy
+const CURRENT_VERSION = '4'; // bump this to force-reset cache on next deploy
 
 function loadFromStorage(): Product[] {
   try {

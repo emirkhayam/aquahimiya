@@ -10,3 +10,5 @@ app/dist/
 _bmad/
 _bmad-output/
 nul
+
+.vercel
