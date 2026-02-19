@@ -3,9 +3,18 @@ import { products as staticProducts } from '@/data/products';
 import type { Product } from '@/data/products';
 
 const STORAGE_KEY = 'adminProducts';
+const VERSION_KEY = 'adminProductsVersion';
+const CURRENT_VERSION = '3'; // bump this to force-reset cache on next deploy
 
 function loadFromStorage(): Product[] {
   try {
+    // If version mismatch — wipe old cache and reload from static
+    const version = localStorage.getItem(VERSION_KEY);
+    if (version !== CURRENT_VERSION) {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.setItem(VERSION_KEY, CURRENT_VERSION);
+      return [];
+    }
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : [];
   } catch {
@@ -15,6 +24,7 @@ function loadFromStorage(): Product[] {
 
 function saveToStorage(products: Product[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+  localStorage.setItem(VERSION_KEY, CURRENT_VERSION);
 }
 
 function deduplicateById(arr: Product[]): Product[] {
@@ -56,7 +66,6 @@ async function fetchAllProducts(): Promise<Product[]> {
 export function useProducts() {
   const [products, setProductsState] = useState<Product[]>(() => {
     const stored = loadFromStorage();
-    // If localStorage is empty (first visit / new browser), use static products
     if (stored.length === 0) {
       saveToStorage(staticProducts);
       return staticProducts;
