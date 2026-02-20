@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useSettings } from '@/hooks/useSettings';
 
 // WhatsApp SVG Icon
 const WhatsAppIcon = () => (
@@ -9,15 +10,8 @@ const WhatsAppIcon = () => (
 
 export default function WhatsAppFAB() {
   const [isVisible] = useState(true);
-  const [phoneNumber, setPhoneNumber] = useState('');
-
-  useEffect(() => {
-    const saved = localStorage.getItem('siteSettings');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setPhoneNumber(parsed.whatsappNumber?.replace(/\D/g, '') || '');
-    }
-  }, []);
+  const { settings } = useSettings();
+  const phoneNumber = settings.whatsappNumber?.replace(/\D/g, '') || '';
 
   const handleClick = () => {
     if (!phoneNumber) return;

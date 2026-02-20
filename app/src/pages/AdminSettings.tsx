@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '../components/AdminLayout';
 import { Save } from 'lucide-react';
+import { settingsApi } from '@/lib/api';
 
 interface Settings {
   siteName: string;
@@ -24,25 +25,36 @@ const AdminSettings = () => {
   });
 
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const isAuth = localStorage.getItem('adminAuth');
-    if (!isAuth) {
-      navigate('/admin');
-      return;
-    }
+    if (!localStorage.getItem('adminToken')) navigate('/admin');
 
-    // Загружаем сохраненные настройки
-    const savedSettings = localStorage.getItem('siteSettings');
-    if (savedSettings) {
-      setSettings(JSON.parse(savedSettings));
-    }
+    // Загружаем настройки с сервера
+    settingsApi.get()
+      .then((data: any) => {
+        if (data) {
+          setSettings(prev => ({ ...prev, ...data }));
+        }
+      })
+      .catch(() => {});
   }, [navigate]);
 
-  const handleSave = () => {
-    localStorage.setItem('siteSettings', JSON.stringify(settings));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+  const handleSave = async () => {
+    setSaving(true);
+    setError('');
+    try {
+      await settingsApi.save(settings);
+      // Сохраняем в localStorage для мгновенного обновления на фронтенде
+      localStorage.setItem('siteSettings', JSON.stringify(settings));
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } catch (err: any) {
+      setError(err.message || 'Ошибка сохранения');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -53,10 +65,11 @@ const AdminSettings = () => {
           <h1 className="text-3xl font-bold text-gray-900">Настройки сайта</h1>
           <button
             onClick={handleSave}
-            className="px-6 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors font-medium flex items-center gap-2"
+            disabled={saving}
+            className="px-6 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors font-medium flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <Save className="w-4 h-4" />
-            Сохранить изменения
+            {saving ? 'Сохранение...' : 'Сохранить изменения'}
           </button>
         </div>
 
@@ -64,6 +77,11 @@ const AdminSettings = () => {
         {saved && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
             ✓ Настройки успешно сохранены!
+          </div>
+        )}
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+            ✗ {error}
           </div>
         )}
 

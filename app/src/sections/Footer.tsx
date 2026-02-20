@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useSettings } from '@/hooks/useSettings';
 
 const footerLinks = {
   catalog: [
@@ -21,25 +21,7 @@ const footerLinks = {
 };
 
 export default function Footer() {
-  const [settings, setSettings] = useState({
-    phone: '',
-    email: '',
-    address: '',
-    workingHours: '',
-  });
-
-  useEffect(() => {
-    const saved = localStorage.getItem('siteSettings');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setSettings({
-        phone: parsed.phone || '',
-        email: parsed.email || '',
-        address: parsed.address || '',
-        workingHours: parsed.workingHours || '',
-      });
-    }
-  }, []);
+  const { settings } = useSettings();
 
   const contacts = [
     { icon: Phone, text: settings.phone || '+7 (800) 555-35-35', href: settings.phone ? `tel:${settings.phone.replace(/\s/g, '')}` : '#' },

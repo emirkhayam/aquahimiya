@@ -1,27 +1,9 @@
-import { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { MarineBackground, FloatingElements } from '@/components/ui/marine-background';
+import { useSettings } from '@/hooks/useSettings';
 
 const Contact = () => {
-  const [settings, setSettings] = useState({
-    phone: '',
-    email: '',
-    address: '',
-    workingHours: '',
-  });
-
-  useEffect(() => {
-    const saved = localStorage.getItem('siteSettings');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setSettings({
-        phone: parsed.phone || '',
-        email: parsed.email || '',
-        address: parsed.address || '',
-        workingHours: parsed.workingHours || '',
-      });
-    }
-  }, []);
+  const { settings } = useSettings();
 
   const contactInfo = [
     {

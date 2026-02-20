@@ -1,16 +1,9 @@
-import { useEffect, useState, memo } from 'react';
+import { memo } from 'react';
+import { useSettings } from '@/hooks/useSettings';
 
 const WhatsAppButton = memo(() => {
-  const [whatsappNumber, setWhatsappNumber] = useState('');
-
-  useEffect(() => {
-    // Загружаем номер WhatsApp из настроек
-    const settings = localStorage.getItem('siteSettings');
-    if (settings) {
-      const parsedSettings = JSON.parse(settings);
-      setWhatsappNumber(parsedSettings.whatsappNumber || '');
-    }
-  }, []);
+  const { settings } = useSettings();
+  const whatsappNumber = settings.whatsappNumber || '';
 
   if (!whatsappNumber) {
     return null; // Не показываем кнопку, если номер не настроен
