@@ -1,0 +1,8 @@
+# Игнорируем пользовательские данные
+data/*.json
+!data/.gitkeep
+
+# Игнорируем загруженные изображения
+uploads/**/*
+!uploads/.gitkeep
+!uploads/products/.gitkeep
